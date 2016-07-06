@@ -24,6 +24,14 @@ The key lessons from this tutorial include:
 
 -   Learning how to code flock based boid movement into your games
 
+For this tutorial, we'll be using some pre-built assets, which you can clone via:
+
+```
+git clone https://MakeSchool-Tutorials@bitbucket.org/MakeSchool-Tutorials/duck-hunt-unity-vr.git
+```
+
+Please download it now and add import it into your project.
+
 First of all create a terrain by going to GameObject-&gt;3D
 Object-&gt;Terrain.
 
