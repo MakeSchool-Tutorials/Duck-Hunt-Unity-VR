@@ -52,8 +52,7 @@ of hills for your play area.
 ![](./media/image23.png)
 
 The terrain height works using a heightmap, grayscale values equal the
-height. ![](./media/image03.gif){width="5.583333333333333in"
-height="6.125in"}
+height. ![](./media/image03.gif)
 
 White is the highest, black is the lowest. Unity stores this information
 internally but it is good to know how it works.
@@ -90,14 +89,15 @@ be the Directional Light.
 
 This one single line of code will provide a compelling Day and Night
 cycle for your experience:
-~~~
 
+~~~
 void Update () {
 
   this.transform.Rotate (new Vector3 (5f * Time.deltaTime, 0f, 0f));
 
 }
 ~~~
+
 This code will rotate the **directional light** around the X axis to
 create the illusion of a day night cycle. If you use a **procedural
 skybox** it will automatically choose the brightest directional light to
@@ -220,17 +220,14 @@ Challenges
 
 Here’s a hint:
 
-(
 ~~~
 if (c.collider.CompareTag ("Terrain")) {
   Terrain t = c.collider.GetComponent<Terrain>();
   TerrainData td = t.terrainData;
   float[,] heights;
   heights = td.GetHeights (0, 0, td.heightmapWidth, td.heightmapHeight);
-  heights [(int)c.contacts [0].point.x, (int)c.contacts [0].point.y]
-  = 0f;
+  heights [(int)c.contacts [0].point.x, (int)c.contacts [0].point.y] = 0f;
   td.SetHeights (0, 0, heights);
   t.ApplyDelayedHeightmapModification ();
 }
 ~~~
-)
