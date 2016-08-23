@@ -132,135 +132,141 @@ void Update () {
 ~~~
 
 This code rotates the **directional light** around the X axis to
-create the illusion of a day night cycle. If you use a **procedural skybox** it will automatically choose the brightest directional light to be the sun.
+create the illusion of a day night cycle. If you use a **procedural skybox** it will automatically choose the brightest directional light to be the sun, giving us the effect not only of seeing the light move, but also seeing the sun in the sky.
 
-![A day-night cycle](../media/image33.png)
+![The sun in the sky](../media/image33.png)
 
 Really neat effect.
 
 >[action]
->Now let’s get the SteamVR Camera Rig in there at position (0,0,0).
+>Now let’s get the SteamVR Camera Rig in there at position (0,0,0). Don't forget to delete your Main Camera!
 
-![Add the SteamVR Camera Rig](../media/image21.png)
+![Add the SteamVR Camera Rig](../media/Capture15.png)
 
 Now that we have the camera rig in the world, we should be able to drag
-guns to the hands. If you launch this in VR you will be in a beautiful
-world with two cannons on your hands.
+guns to the hands.
 
-![Cannons do nothing yet](../media/image44.png)
+>[action]
+>Find RocketLauncher and SciFiRifle in the Free Guns Pack/Prefabs folder and add the RocketLauncher to yoru left hand and the SciFiRifle to your right hand.
 
-Unfortunately they don’t do anything yet, so the next step is adding
-behavior to them.
+![Guns have been added to hands](../media/Capture16.png)
 
-First let’s add our sound effects to our weapons, drag the
-RocketLauncherSound and Pistol sounds to the Rocket Launcher and
-SciFiRifle respectively.
+If you play the Scene, you'll be in a beautiful world with two cannons on your hands. You can see the controller models through them, because we've chosen to leave the models on.
 
-![Drag the cannons into the proper slots](../media/image10.png)
+![Cannons do nothing yet](../media/Animation5.gif)
 
-Next we will need to make the Rocket Spawner, so make an empty
-GameObject as a child of the RocketLauncher. This object will be the
-object that spawns rockets.
+Unfortunately they don’t do anything yet. We'll change that.
 
-![The rocket spawner](../media/image14.png)
+First let’s add our sound effects to our weapons.
 
-Make sure it is 3 units away from the mouth of the rocket launcher so
-that the rocket can spawn in front of the launcher, and make sure it’s
-blue arrow faces away from the barrel of the rocket launcher (forward).
+>[action]
+>Drag the RocketLauncherSound and Pistol sounds to the Rocket Launcher and SciFiRifle respectively. When you do this, an AudioSource component will be added to each one with the sound filled into the SoundClip slot.
 
-Now we need to have SteamVR\_TrackedController scripts on both left and
-right hands, so drag these scripts to the hands to make them work:
+![Dragging each sound clip onto each GameObject should create an AudioSource for each](../media/Capture17.png)
+
+If you play the scene now, you should merely hear the sounds play once. Our script will trigger them to play at the appropriate times, so you can uncheck "PlayOnAwake" on each one.
+
+>[action]
+>Do that.
+
+![We unchecked PlayOnAwake](../media/Capture18.png)
+
+Next we will need to make the Rocket Spawner.
+
+>[action]
+>Make an empty GameObject as a child of the RocketLauncher. This object will be the object that spawns rockets. Position itin front of the rocket launcher so that rockets will spawn in front of the launcher, and make sure its blue arrow (forward arrow) faces in the direction you want stuff to launch.
+
+![The rocket spawner](../media/Capture19.png)
+
+>[action]
+>Our firing script requires each hand to have a SteamVR\_TrackedController scripts on both left and right hands, so drag add these scripts to the hands.
 
 ![The script requires SteamVR_TrackedController](../media/image32.png)
 
-Next we will make the muzzle flash for the machine gun, so drag the
-Flare prefab onto the machine gun like this:
+Next we will make the muzzle flash for the machine gun.
 
-![The gun should have Flare](../media/image41.png)
+>[action]
+>Drag the Flare Prefab from the Standard Assets/ParticleSystems/Prefabs folder onto the SciFiRifle.
 
-Finally we need a script to control everything. This is called the
-PlayerController script, and you can find it in your distribution
-package. Please connect this to the SteamVR Camera Rig then drag the
-Missile to the Rocket Prefab slot.
+![The Flare](../media/Capture29.png)
 
-![Drag into slots](../media/image37.png)
+When you run your scene now, your riffle should infinitely spark. Our script will make it just spark when we launch from it.
 
-We will wire up all the other slots now:
+Speaking of that script...
 
-![Drag everything into all the slots](../media/image24.png)
+>[action]
+> Add a PlayerController component to your Camera Rig.
 
-The controller will now control every aspect of the game. Just press
-Play to try your new weapons.
+![The PlayerController component](../media/Capture20.png)
 
-Alas the world is rather boring, there is nothing to shoot. So first
-let’s add some Tags to the game, then we will add some targets to use
-them:
+This is a script we wrote that contains all the logic the guns will use, and requires the set-up we just did. If any of the set-up felt arbitrary, it's because this script requires it. When working with a script someone else wrote, you will often have to do arbitrary set up!
 
-![Add tags](../media/image13.png)
+The final step required to set up the script is to fill in its slots.
 
-So we are going to add some targets. Let’s put a few cubes in the world
-to blow up, and also a few flying drones as fun targets to try to hit.
+>[action]
+>Drag the Missile Prefab from the Hierarchy Panel to the Rocket Prefab slot.
 
-First things first, add a cube and call it Target. Give Target the
-Target tag.
+![The Missile Prefab goes in the Rocket Prefab slot](../media/Capture21.png)
 
-Also attach the Terrain tag to the terrain.
+>[action]
+>Fill in the rest of the slots by dragging in the left and right controllers for those fields, the SciFiRifle into all the Missile slots, and the RocketLauncher into all of the Rocket slots. The RocketLauncherSpawner should go into the slot for the spawner, the Machine Gun Muzzle Flare should be linked to the Flare we added to the SciFiRifle, and we chose to use the Standard Assets/ParticleSystems/Prefabs/FlareMobile as the Bullet Puff Prefab.
 
-Make sure the target cubes are set up like this:
+![Fill in the rest of the slots](../media/Capture22.png)
 
-![Set up the target cubes](../media/image17.png)
+Now when you play the Scene -- what's this?
+
+![Wrong Hands?](../media/Animation6.gif)
+
+It looks like the controllers operate the incorrect weapons the way we set it up :/
+
+That's okay. We didn't do anything wrong, we just set things up differently than how we were intended to.
+
+>[action]
+>Can you think of a way to fix this?
+
+<!-- -->
+
+>[solution]
+>One way is to simply switch which controller goes in which slot. The other way is to reorganize the structure of the controllers such that the guns switch hands. This second approach is more difficult, but a little better in the long-run, because it means that we can keep the left controller in the left slot and the right controller in the right slot. When making a fix, it's a good idea to mitigate any future confusion.
+>
+>![Wrong Hands FIXED!](../media/Animation7.gif)
+
+You should now be able to use your hands in the expected way.
+
+![The expected hand use](../media/Animation8.gif)
+
+Alas the world is rather boring, there is nothing to shoot.
+
+Let's make some Cubes we can shoot!
+
+>[action]
+>Add a cube with a Rigidbody, turn it into a Prefab, and then make a line of them.
 
 Now you should be able to shoot the cubes and knock them around. Fun!
 
+![Set up the target cubes](../media/Animation9.gif)
+
 Finally let’s add the drones to the game.
 
-![Add drones](../media/image25.png)
+>[action]
+>Add 3 or 4 Drone Prefabs to the same spot in the scene. They should fly around in a seemingly complex way.
 
-The drones use a flocking algorithm to fly. They will hover around the
-DroneFlightZone region, usually -10 and +10 from it in all directions.
-We can put them above the cubes now, and discuss how the flocking
-algorithm works.
+![The Drones fly around](../media/Animation10.gif)
 
-Flocking is an advanced AI concept that uses simple rules to build very
-interesting emergent behavior. Every single drone runs these rules
-independently.
+The drones move using something known as a [Flocking Algorithm](https://en.wikipedia.org/wiki/Flocking_(behavior)#Flocking_rules).
 
-The algorithm we are using here does three simple steps.
+Flocking is an AI concept that uses simple rules to build an interesting emergent behaviour. Every single drone runs on the same rules, and uses the following 3 steps:
 
 1.  Gather (find the average of all the drone positions and move towards it).
 2.  Repel (stay a fixed distance from other drones)
 3.  Bound (force the drones to not leave the bounded area by flipping their velocity if they leave the area)
 
-All we need to do is add these three vectors together and we will have a
-finished Vector for the drone movement.
+Our flocking code is in BoidBrain; if you'd like a challenge, remove that component from your Drones and try writing your own code from scratch!
 
-At this point you can either A.) try to write the flocking code
-yourself, or B.) just use the flocking code that is provided in the
-BoidBrain.cs class.
+You can always examine BoidBrain for help.
 
-If you choose to write your own please remove BoidBrain from the Drone
-prefab and apply changes.
-
-You can always examine BoidBrain.cs for help.
-
-Challenges
+If you'd like more challenges, also, try any of the following:
 
 1.  Make the drones die when shot. Also make them respawn!
-
 2.  Implement the jeeps as another enemy to shoot.
-
-3.  Make the rocket deform the terrain when it hits.
-
-Here’s a hint:
-
-~~~
-if (c.collider.CompareTag ("Terrain")) {
-  Terrain t = c.collider.GetComponent<Terrain>();
-  TerrainData td = t.terrainData;
-  float[,] heights;
-  heights = td.GetHeights (0, 0, td.heightmapWidth, td.heightmapHeight);
-  heights [(int)c.contacts [0].point.x, (int)c.contacts [0].point.y] = 0f;
-  td.SetHeights (0, 0, heights);
-  t.ApplyDelayedHeightmapModification ();
-}
-~~~
+3.  Make the rocket deform the terrain when it hits. You may need to do some research for this one ;)
