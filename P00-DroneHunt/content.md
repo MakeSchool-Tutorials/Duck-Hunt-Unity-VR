@@ -3,24 +3,16 @@ title: "Drone Hunt"
 slug: drone-hunt-vr
 ---
 
-Today we are going to create a game where you can shoot flocking drones
-out of the sky.
+Today we are going to create a game where you can shoot flocking drones out of the sky.
 
-The key lessons from this tutorial include:
+This tutorial will cover how to:
 
--   Learning about Unity Terrain in depth
-
--   Learning how to make a gun that shoots a bullet using raycasting
-
--   Learning how to make a gun that shoots a projectile bullet
-
--   Learning how to make a day and night cycle
-
--   Learning how to use physics to apply explosion forces
-
--   Learning how to link 3d audio to your game
-
--   Learning how to code flock based boid movement into your games
+- use Unity Terrain
+- make a day and night cycle
+- both Raycast and launch projectiles
+- create cool explosions
+- link 3D audio to your game
+- add [flocking boid](http://66.media.tumblr.com/d2d8014d63953bf7ded4038a813b29fd/tumblr_inline_ngoncdjhPt1sr36g5.gif) movement
 
 For this tutorial, we'll be using some pre-built assets, which you can clone via:
 
@@ -28,76 +20,108 @@ For this tutorial, we'll be using some pre-built assets, which you can clone via
 git clone https://MakeSchool-Tutorials@bitbucket.org/MakeSchool-Tutorials/duck-hunt-unity-vr.git
 ```
 
-Please download it now and add import it into your project.
+>[action]
+>Create a new Unity project and import the package into it.
 
-First of all create a terrain by going to GameObject-&gt;3D
-Object-&gt;Terrain.
+![Import the package](../media/Capture1.png)
+
+We're going to use a Terrain to create our world.
+
+As a word of caution; Terrain is expensive to render because of how many triangles it contains, so be careful not to go overboard with it. You can use it in VR, just be sure to watch your stats!
+
+>[action]
+>Create a new Terrain (GameObject-&gt;3D Object-&gt;Terrain).
 
 ![Create a Terrain](../media/image18.png)
 
-A terrain starts out as a giant white square, but we will fix that. We
-will also fix it’s location. Unlike most objects, a terrain is actually
-top left justified instead of centered. This means we need to offet it’s
-position a little. A terrain is 500 x 500 units in size, so in order to
-center it we make the X and Z coordinates both -250 as shown below.
+A Terrain starts out as a giant white square, but we will fix that. We will also fix it’s location. Unlike most objects, a terrain is top-left justified instead of centered. This means we need to offset its position a little.
 
-![We need to reposition the Terrain](../media/image19.png)
+>[action]
+>Since a Terrain is 500 x 500 units in size, go ahead and set its position in X and Z to -250.
 
-Now we are going to paint the ground with some textures. Please click
-the painting tool as shown and click edit textures to add a new texture,
-as shown below:
+![We need to reposition the Terrain](../media/Capture2.png)
 
-![Add new Textures to the Terrain](../media/image12.png)
+In order to paint the ground with textures, we'll need to add some to our Terrain.
 
-Then do the same to add Cliff and Sand as shown:
+>[action]
+>Select the paint brush icon and then select "Edit Textures" and then "Add Textures."  When you do, a Window should appear.
 
-![Add the Cliff and Sand](../media/image42.png)
+![The Edit Textures button](../media/Capture3.png)
 
-Then use the Raise Terrain tool to raise the terrain and make a circle
-of hills for your play area.
+![The Edit Textures button](../media/Capture4.png)
 
-![Raise the Terrain](../media/image23.png)
+>[action]
+>Click "Select" in the Albedo Texture 2D slot and assign it to GrassHillAlbedo and then click "Add."
 
-The terrain height works using a heightmap, grayscale values equal the
-height.
+![Adding the GrassHillAlbedo Texture](../media/Capture5.png)
 
-![Heightmap](../media/image03.gif)
+You may notice that your Terrain is now painted with this Texture.
 
-White is the highest, black is the lowest. Unity stores this information
-internally but it is good to know how it works.
+![The Terrain is now painted with the new Texture](../media/Capture6.png)
 
-Next let’s paint our terrain to look pretty, use the painting tool to
-paint on the terrain as shown:
+>[action]
+>Do the same to add CliffAlbedoSpecular and SandAlbedo.
 
-![Paint the Terrain](../media/image38.png)
+![Add the Cliff and Sand](../media/Capture8.png)
 
-Now let’s learn about how to use terrain to make trees! Follow this
-guide to make your own trees:
+Before we paint, we're going to create a ring of mountains that will surround our player.
 
-![Select the tree Prefab](../media/image45.png)
+>[action]
+>Click the raise terrain icon and then click and drag on the Terrain to raise various sections to make a circle of mountains. Be sure to set the opacity of the Brush to be nonzero!
 
-Now click mass place trees, and pick 50 for the count. This will give us
-a little variety in our scene without making a million triangles.
+![Raise the Terrain](../media/Animation1.gif)
 
-![Mass Place trees](../media/image43.png)
+>[info]
+>Terrains keep track of how high they are in various places using something called a heightmap. A heightmap is an array of height values that can be more easily visualized [using colors](https://udn.epicgames.com/Three/rsrc/Three/TerrainHeightmaps/Heightmap.gif). Unity stores this information internally, but it is good to know how it works in case you ever want to access it.
 
-Terrain can also do grass by clicking the grass button and adding a
-grass to it. This is very beautiful but can eat triangles very quickly.
-Use at your own risk, and monitor the Stats panel.
+Now that our Terrain has some shape to it, let's paint it!
 
-![Add the Grass Texture](../media/image39.png)
+>[action] Select the paintbrush icon again, and paint a texture by selecting it and then clicking and dragging on the Terrain. Be sure Brush Strength is nonzero!
 
-![Now there's grass](../media/image34.png)
+![Paint the Terrain](../media/Animation2.gif)
 
-Now that we have this pretty scene set up, the next step is to add some
-interactivity. First of all attach the DayAndNight cycle script to your
-Directional Light. This will turn it into a sun.
+Varying Brushes, Brush Size, Opacity, and Target Strength can give you some pretty neat effects!
 
-Also open the Lighting panel under Window-&gt;Lighting to set the sun to
-be the Directional Light.
+![You can do cool things with different brushes and brush properties](../media/Capture7.png)
 
-This one single line of code will provide a compelling Day and Night
-cycle for your experience:
+Now let’s learn about how to use terrain to make trees!
+
+>[action]
+Select the tree icon and then click the "Edit Trees" button. A Window should appear.
+
+![Edit Trees](../media/Capture9.png)
+
+>[action]
+>Set the Tree Prefab as Broadleaf_Mobile and then click "Add."
+
+![Prefab Added](../media/Capture10.png)
+
+Now click "Mass Place Trees", set 50 for the Number of Trees so that we get a little variety in our scene without making a million triangles, and then click "Place."
+
+![Mass Place trees](../media/Capture11.png)
+
+Behold! Trees!
+
+![Behold! Trees!](../media/Capture12.png)
+
+Terrain can also do grass by clicking the grass icon, adding a grass Texture to it, and then. This is very beautiful but try not to go overboard! Grass can increase triangle count very quickly. Use at your own risk, and monitor the Stats panel if you decide to use grass!
+
+![Add the Grass Texture](../media/Capture13.png)
+
+![Now there's grass](../media/Animation3.gif)
+
+Now that we have this pretty scene set up, let's bring it to life!
+
+>[action]
+>Attach the DayNightCycle component to your Directional Light, and then open the Lighting panel (Window-&gt;Lighting) to set the sun to be the Directional Light.
+
+![Set up the Day/Night Cycle](../media/Capture14.png)
+
+When you run the Scene, you should see the sun rise and set!
+
+![Day/Night Cycle](../media/Animation4.gif)
+
+This neat little trick is actually achieved with just one line of code in the Update method :)
 
 ~~~
 void Update () {
@@ -107,15 +131,15 @@ void Update () {
 }
 ~~~
 
-This code will rotate the **directional light** around the X axis to
-create the illusion of a day night cycle. If you use a **procedural
-skybox** it will automatically choose the brightest directional light to
-be the sun.
+This code rotates the **directional light** around the X axis to
+create the illusion of a day night cycle. If you use a **procedural skybox** it will automatically choose the brightest directional light to be the sun.
 
 ![A day-night cycle](../media/image33.png)
 
-Really neat effect, now let’s get the SteamVR camera rig in there at
-0,0,0:
+Really neat effect.
+
+>[action]
+>Now let’s get the SteamVR Camera Rig in there at position (0,0,0).
 
 ![Add the SteamVR Camera Rig](../media/image21.png)
 
