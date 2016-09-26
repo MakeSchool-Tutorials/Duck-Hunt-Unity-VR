@@ -14,6 +14,8 @@ This tutorial will cover how to:
 - link 3D audio to your game
 - add [flocking boid](http://66.media.tumblr.com/d2d8014d63953bf7ded4038a813b29fd/tumblr_inline_ngoncdjhPt1sr36g5.gif) movement
 
+#Let's Begin
+
 For this tutorial, we'll be using some pre-built assets, which you can clone via:
 
 ```
@@ -24,6 +26,8 @@ git clone https://MakeSchool-Tutorials@bitbucket.org/MakeSchool-Tutorials/duck-h
 >Create a new Unity project and import the package into it.
 
 ![Import the package](../media/Capture1.png)
+
+#Making the Terrain
 
 We're going to use a Terrain to create our world.
 
@@ -110,6 +114,8 @@ Terrain can also do grass by clicking the grass icon, adding a grass Texture to 
 
 ![Now there's grass](../media/Animation3.gif)
 
+#Making a Day/Night Cycle
+
 Now that we have this pretty scene set up, let's bring it to life!
 
 >[action]
@@ -137,6 +143,8 @@ create the illusion of a day night cycle. If you use a **procedural skybox** it 
 ![The sun in the sky](../media/image33.png)
 
 Really neat effect.
+
+#Putting it in VR & Hand Set Up
 
 >[action]
 >Now let’s get the SteamVR Camera Rig in there at position (0,0,0). Don't forget to delete your Main Camera!
@@ -247,6 +255,8 @@ Now you should be able to shoot the cubes and knock them around. Fun!
 ![Set up the target cubes](../media/Animation9.gif)
 
 Finally let’s add the drones to the game.
+
+#Drones!
 
 >[action]
 >Add 3 or 4 Drone Prefabs to the same spot in the scene. They should fly around in a seemingly complex way.
