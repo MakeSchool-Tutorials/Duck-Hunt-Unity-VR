@@ -266,7 +266,7 @@ Let's make some Cubes we can shoot!
 
 > [action]
 >
-Add a cube with a `Rigidbody`, turn it into a Prefab, and then make a line of them.
+Add a cube with a `Rigidbody` and a `Target` tag, turn it into a Prefab, and then make a line of them.
 
 Now you should be able to shoot the cubes and knock them around. Fun!
 
