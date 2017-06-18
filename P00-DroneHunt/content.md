@@ -19,7 +19,8 @@ This tutorial will cover how to:
 For this tutorial, we'll be using some pre-built assets, which you can clone via:
 
 ```
-git clone https://MakeSchool-Tutorials@bitbucket.org/MakeSchool-Tutorials/duck-hunt-unity-vr.git
+cd Desktop
+git clone https://github.com/MakeSchool-Tutorials/Duck-Hunt-Unity-VR-Starter.git
 ```
 
 > [action]
